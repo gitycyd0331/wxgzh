@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 引入约束schema约束 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:websocket="http://www.springframework.org/schema/websocket"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+	   http://www.springframework.org/schema/tx
+	   http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	   http://www.springframework.org/schema/mvc
+	   http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+	   http://www.springframework.org/schema/websocket
+	   http://www.springframework.org/schema/websocket/spring-websocket-4.2.xsd ">
+    
+    <!-- 启动加载 mybatis -->
+ 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	    <property name="dataSource" ref="DataSource" />
+	    <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	    <property name="mapperLocations" value="classpath:wxmapper/*.xml"></property> 
+ 	</bean>
+ 	
+	<!-- 接口所在包名，Spring会自动查找其下的类  接口形式-->
+ 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	<property name="basePackage" value="top.caoyd.www.dao" />
+    	<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+  	</bean>
+</beans>

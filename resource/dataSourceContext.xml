@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	<!-- 引入JDBC配置文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:jdbc.properties" />
+	</bean>
+
+	<!-- 数据库数据源 配置 连接池 -->
+	<!-- destroy-method="close"的作用是当数据库连接不使用的时候,就把该连接重新放到数据池中,方便下次使用调用 -->
+	<bean id="DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${driver}" />
+		<property name="jdbcUrl" value="${url}" />
+		<property name="user" value="${userName}" />
+		<property name="password" value="${password}" />
+		<!-- 初始化连接池 -->
+		<property name="initialPoolSize" value="${initialSize}" />
+		<!-- 最大连接数 -->
+		<property name="maxPoolSize" value="${maxPoolSize}" />
+		<!-- 最小连接数 -->
+		<property name="minPoolSize" value="${minPoolSize}" />
+		<!-- 最长空闲时间 -->
+		<property name="maxIdleTime" value="${maxIdleTime}" />
+		<!-- 自动关闭 -->
+		<property name="autoCommitOnClose" value="${autoClose}" />
+
+		<!-- 掉线重连,保持活动连接 -->
+		<property name="breakAfterAcquireFailure" value="${breakAfterAcquireFailure}"></property>
+		<property name="testConnectionOnCheckout" value="${testConnectionOnCheckout}"></property>
+		<property name="testConnectionOnCheckin" value="${testConnectionOnCheckin}"></property>
+		<property name="idleConnectionTestPeriod" value="${idleConnectionTestPeriod}"></property>
+		<property name="acquireRetryAttempts" value="${acquireRetryAttempts}"></property>
+		<property name="acquireRetryDelay" value="${acquireRetryDelay}"></property>
+	</bean>
+	<!-- 加载事务管理 -->
+	<import resource="classpath:mybatis-aop.xml"/>
+</beans>
