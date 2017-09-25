@@ -74,7 +74,7 @@ public class WechatController {
 	@RequestMapping(value = "/wechat.wx", method = RequestMethod.POST)
 	public void wechatServicePost(HttpServletRequest request,
 			HttpServletResponse response) {
-		log.debug("进入请求 收到的参数是:" + request);
+		log.debug("进入请求" );
 		PrintWriter print = null;
 		String responseMessage = wechatService.processRequest(request);
 		log.debug("返回的参数 " + responseMessage);
@@ -103,12 +103,16 @@ public class WechatController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping({ "/{info}/robot.wx" })
+	@RequestMapping({"/{info}/robot.wx"})
 	public RobotResult sendMessage(HttpServletRequest request,
 			HttpServletResponse response, @PathVariable("info") String info) {
 		try {
-			RobotResult ss = this.wechatService.sendMessage(info);
-			return ss;
+			if(info.equals(new String(info.getBytes("ISO-8859-1"),"ISO-8859-1"))){
+				return wechatService.sendMessage(new String(info.getBytes("ISO-8859-1"),"utf-8"));
+			}
+			if(info.equals(new String(info.getBytes("utf-8"),"utf-8"))){
+				return wechatService.sendMessage(info);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

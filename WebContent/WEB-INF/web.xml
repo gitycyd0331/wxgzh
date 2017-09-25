@@ -45,9 +45,12 @@
 		<servlet-name>dispatcherServlet</servlet-name>
 		<url-pattern>*.wx</url-pattern>
 	</servlet-mapping>
-
+	
+	
 	<!-- URL地址中访问目录时，默认指向的地址 -->
-	<!-- <welcome-file-list> <welcome-file>login.html</welcome-file> </welcome-file-list> -->
+	<welcome-file-list> 
+		<welcome-file>index.html</welcome-file> 
+	</welcome-file-list> 
 	<!-- session中存储的对象有效时长、分钟 -->
 	<session-config>
 		<session-timeout>20</session-timeout>

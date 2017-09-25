@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 public class CheckoutUtil {
 
 	private static final Logger log = Logger.getLogger(CheckoutUtil.class);
-	// 与接口配置信息中的Token要一致
+	// 与接口配置信息中的Token要一致 这是自定义的
 	private static String token = "Javawxcyd";
 
 	/**
@@ -29,6 +29,7 @@ public class CheckoutUtil {
 			String nonce) {
 		String[] arr = new String[] { token, timestamp, nonce };
 		// 将token、timestamp、nonce三个参数进行字典序排序
+		//可以参考微信开发API
 		// Arrays.sort(arr);
 		sort(arr);
 		StringBuilder content = new StringBuilder();
@@ -81,6 +82,10 @@ public class CheckoutUtil {
 		return s;
 	}
 
+	/**
+	 * 排序
+	 * @param a
+	 */
 	public static void sort(String a[]) {
 		for (int i = 0; i < a.length - 1; i++) {
 			for (int j = i + 1; j < a.length; j++) {

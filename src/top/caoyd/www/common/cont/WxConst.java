@@ -39,7 +39,7 @@ public class WxConst {
 	 */
 	public static final String MESSSAGE_TYPE_LOCATION = "location";
 	/**
-	 * 音频类型
+	 * 语音类型
 	 */
 	public static final String MESSSAGE_TYPE_VOICE = "voice";
 	/**

@@ -4,6 +4,6 @@
 
 	<select id="selectAll" resultType="top.caoyd.www.pojo.Emp">
 		select * from emp
-	</select> 
-	
+	</select>
+
 </mapper>

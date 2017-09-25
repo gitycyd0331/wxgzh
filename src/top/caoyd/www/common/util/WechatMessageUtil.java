@@ -3,6 +3,7 @@ package top.caoyd.www.common.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,9 @@ import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+
+import top.caoyd.www.bean.message.ImageMessage;
+import top.caoyd.www.bean.message.TextMessage;
 
 /**
  * 微信消息处理的工具类
@@ -90,6 +94,20 @@ public class WechatMessageUtil {
 		return map;
 	}
 
+	public static void main(String[] args) {
+		TextMessage textMessage = new TextMessage("你走  把");
+		textMessage.setToUserName("asdsd");
+		textMessage.setFromUserName("asdd");
+		textMessage.setCreateTime(new Date().getTime());
+		textMessage.setMsgType("text");
+		try {
+			String responseMessage = WechatMessageUtil.beanToXML(textMessage);
+			System.out.println(responseMessage);
+		} catch (Exception e) {
+			log.error("文本消息转化为xml失败" + e);
+		}
+	}
+	
 	/**
 	 * 对象转微信所需的XML格式
 	 * 
@@ -115,12 +133,12 @@ public class WechatMessageUtil {
 			field.setAccessible(true);
 			superFieldName = field.getName(); // 得到父类的字段名
 			superFieldNamevlaue = field.get(obj); // 得到父类的字段值
-			if (superFieldNamevlaue == null) {
+			if (superFieldNamevlaue == null) {//如果字段值为空跳过
 				continue;
 			}
 			sb.append("<").append(superFieldName).append(">");
 			if ("CreateTime".equals(superFieldName)
-					|| "MsgId".equals(superFieldName)) {
+					|| "MsgId".equals(superFieldName)) {//这些字段不需要添加CDATA
 				sb.append(superFieldNamevlaue);
 			} else {
 				sb.append("<![CDATA[").append(superFieldNamevlaue)
@@ -212,5 +230,4 @@ public class WechatMessageUtil {
 	// };
 	// }
 	// });
-
 }

@@ -45,5 +45,5 @@
 		<property name="acquireRetryDelay" value="${acquireRetryDelay}"></property>
 	</bean>
 	<!-- 加载事务管理 -->
-	<import resource="classpath:mybatis-aop.xml"/>
+	<import resource="classpath:mybatis-aop.xml" />
 </beans>
